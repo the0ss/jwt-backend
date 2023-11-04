@@ -1,7 +1,12 @@
 package com.theoss.jwtbackend.service;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +35,9 @@ public class AuthService {
                     .password(passwordEncoder.encode(request.getPassword()))
                     .firstname(request.getFirstname())
                     .lastname(request.getLastname())
-                    .roles(Role.USER)
+                    .roles(request.getRoles())
                     .build();
+                    
         userDao.save(user);
         
         var jwtToken=jwtTokenProvider.generateToken(user);

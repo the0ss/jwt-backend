@@ -1,10 +1,8 @@
 package com.theoss.jwtbackend.entity;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
@@ -35,7 +33,7 @@ public class User implements UserDetails{
     private Role roles;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(roles.name()));
+        return roles.getAuthorities();
     }
 
     @Override

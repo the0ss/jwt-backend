@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.theoss.jwtbackend.entity.Role;
+
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -50,6 +52,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize->authorize
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/forAdmin").hasAnyAuthority(Role.ADMIN.name())
+                .requestMatchers("/api/forUser").hasAnyRole(Role.USER.name())
                 .anyRequest().authenticated());
         httpSecurity.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         httpSecurity.authenticationProvider(authenticationProvider());

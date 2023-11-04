@@ -17,7 +17,7 @@ public class JwtService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userDao.findById(email).orElseThrow(()->new UsernameNotFoundException(email+"not found"));
+        return userDao.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(email+"not found"));
     }
     
 }

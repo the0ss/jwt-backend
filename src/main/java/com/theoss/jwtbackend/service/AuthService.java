@@ -44,7 +44,7 @@ public class AuthService {
       authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
       );
-      var user=userDao.findById(request.getEmail()).orElseThrow();
+      var user=userDao.findByEmail(request.getEmail()).orElseThrow();
       var jwtToken=jwtTokenProvider.generateToken(user);
         return JwtResponse.builder()
             .token(jwtToken)
